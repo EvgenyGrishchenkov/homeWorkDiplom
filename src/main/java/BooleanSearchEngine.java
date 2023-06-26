@@ -5,15 +5,11 @@ import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BooleanSearchEngine implements SearchEngine {
     //???
-
-    Map<String, PageEntry> zaeb = new HashMap<>();
-    Map<String, List<PageEntry>> resultZaeb = new HashMap<>();
-    // Map<String, Integer> freqs = new HashMap<>();
-    //List<PageEntry> spisok = new ArrayList<>();
+    Map<String, PageEntry> zZ = new HashMap<>();
+    Map<String, List<PageEntry>> resultZZZ = new HashMap<>();
 
     public BooleanSearchEngine(File pdfsDir) throws IOException {
         for (File scannedFile : pdfsDir.listFiles()) {
@@ -40,32 +36,24 @@ public class BooleanSearchEngine implements SearchEngine {
                 for (Map.Entry<String, Integer> entry : freqs.entrySet()) {
                     PageEntry pageEntry = new PageEntry(scannedFile.getName(), i, entry.getValue());
 
-                    zaeb.put(entry.getKey(), pageEntry);
+                    zZ.put(entry.getKey(), pageEntry);
                 }
-                for (Map.Entry<String, PageEntry> entry : zaeb.entrySet()) {
+                for (Map.Entry<String, PageEntry> entry : zZ.entrySet()) {
                     String key = entry.getKey();
                     PageEntry value = entry.getValue();
 
-                    if (!resultZaeb.containsKey(key)) {
-                        resultZaeb.put(key, new ArrayList<>());
+                    if (!resultZZZ.containsKey(key)) {
+                        resultZZZ.put(key, new ArrayList<>());
                     }
-                    resultZaeb.get(key).add(value);
+                    resultZZZ.get(key).add(value);
                 }
-                //System.out.println(resultZaeb.get("в"));
             }
         }
-
-
-
     }
 
     @Override
     public List<PageEntry> search(String word) {
-        List<PageEntry> result = resultZaeb.get(word);
-//                .stream()
-//                .filter(pageEntry -> pageEntry.getPageContent().containsWord(word))
-//                .map(pageEntry -> new PageEntry(pageEntry.getPageName(), pageEntry.getPageIndex()))
-//                .collect(Collectors.toList());
+        List<PageEntry> result = resultZZZ.get(word);
         return result;
     }
 }

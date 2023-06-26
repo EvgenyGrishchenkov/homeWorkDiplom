@@ -17,13 +17,13 @@ public class SearchServer {
                         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                         PrintWriter out = new PrintWriter(socket.getOutputStream());
                 ) {
-                    String query = in.readLine(); // получаем запрос от клиента
+                    String query = in.readLine();
                     System.out.println("Получен запрос: " + query);
 
-                    String result = engine.search(query).toString(); // передаем запрос в поисковый движок
+                    String result = engine.search(query).toString();
                     System.out.println("Результат поиска: " + result);
 
-                    out.println(result); // отправляем результат обратно клиенту
+                    out.println(result);
                     out.flush();
                 } catch (IOException e) {
                     System.out.println("Ошибка при обработке подключения");
