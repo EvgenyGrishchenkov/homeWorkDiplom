@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.*;
 
 public class BooleanSearchEngine implements SearchEngine {
-    //???
     Map<String, PageEntry> zZ = new HashMap<>();
     Map<String, List<PageEntry>> resultZZZ = new HashMap<>();
 
@@ -21,11 +20,9 @@ public class BooleanSearchEngine implements SearchEngine {
                 var page = doc.getPage(i);
                 var text = PdfTextExtractor.getTextFromPage(page);
                 var words = text.split("\\P{IsAlphabetic}+");
-                // прочтите тут все pdf и сохраните нужные данные,
-                // тк во время поиска сервер не должен уже читать файлы
 
-                Map<String, Integer> freqs = new HashMap<>(); // мапа, где ключом будет слово, а значением - частота
-                for (var word : words) { // перебираем слова
+                Map<String, Integer> freqs = new HashMap<>();
+                for (var word : words) {
                     if (word.isEmpty()) {
                         continue;
                     }
@@ -50,10 +47,9 @@ public class BooleanSearchEngine implements SearchEngine {
             }
         }
     }
-
     @Override
     public List<PageEntry> search(String word) {
         List<PageEntry> result = resultZZZ.get(word);
-        return result;
+        return result != null ? result : Collections.emptyList();
     }
 }
