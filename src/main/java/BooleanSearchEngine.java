@@ -1,4 +1,3 @@
-
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
@@ -42,10 +41,10 @@ public class BooleanSearchEngine implements SearchEngine {
             }
         }
     }
-
     @Override
     public List<PageEntry> search(String word) {
         List<PageEntry> result = resultZZZ.get(word);
-        return result != null ? result : Collections.emptyList();
+        Collections.sort(result);
+        return result;
     }
 }
