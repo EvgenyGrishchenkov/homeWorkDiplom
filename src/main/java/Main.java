@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -7,9 +9,9 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-//        BooleanSearchEngine engine = new BooleanSearchEngine(new File("pdfs"));
+ //       BooleanSearchEngine engine = new BooleanSearchEngine(new File("pdfs"));
 //        SearchServer server = new SearchServer();
-//        System.out.println(engine.search("бизнес"));
+ //       System.out.println(engine.search("бизнес"));
 
         try (ServerSocket serverSocket = new ServerSocket(8989);) {
             BooleanSearchEngine engine = new BooleanSearchEngine(new File("pdfs"));
@@ -25,10 +27,13 @@ public class Main {
                     System.out.println("Получен запрос: " + query);
                     query = query.toLowerCase();
                     List<PageEntry> result = engine.search(query);
-                    System.out.println("Результат поиска: " + result);
 
-                    out.println(result);
+                    Gson gson = new Gson();
+                    String jsonResult = gson.toJson(result);
+
+                    out.println(jsonResult);
                     out.flush();
+
                 } catch (IOException e) {
                     System.out.println("Ошибка при обработке подключения");
                     e.printStackTrace();
