@@ -16,7 +16,7 @@ public class Main {
         try (ServerSocket serverSocket = new ServerSocket(8989);) {
             BooleanSearchEngine engine = new BooleanSearchEngine(new File("pdfs"));
             System.out.println("Сервер запущен");
-
+            System.out.println(engine.search("бизнес"));
             while (true) {
                 try (
                         Socket socket = serverSocket.accept();

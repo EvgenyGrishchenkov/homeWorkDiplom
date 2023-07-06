@@ -1,3 +1,4 @@
+
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
@@ -7,16 +8,13 @@ import java.io.IOException;
 import java.util.*;
 
 public class BooleanSearchEngine implements SearchEngine {
-    Map<String, PageEntry> zZ = new HashMap<>();
     Map<String, List<PageEntry>> resultZZZ = new HashMap<>();
 
     public BooleanSearchEngine(File pdfsDir) throws IOException {
         for (File scannedFile : pdfsDir.listFiles()) {
-
             var doc = new PdfDocument(new PdfReader(scannedFile));
             int numberPages = doc.getNumberOfPages();
             for (int i = 1; i <= numberPages; i++) {
-
                 var page = doc.getPage(i);
                 var text = PdfTextExtractor.getTextFromPage(page);
                 var words = text.split("\\P{IsAlphabetic}+");
@@ -31,22 +29,20 @@ public class BooleanSearchEngine implements SearchEngine {
                 }
 
                 for (Map.Entry<String, Integer> entry : freqs.entrySet()) {
-                    PageEntry pageEntry = new PageEntry(scannedFile.getName(), i, entry.getValue());
+                    String word = entry.getKey();
+                    int frequency = entry.getValue();
 
-                    zZ.put(entry.getKey(), pageEntry);
-                }
-                for (Map.Entry<String, PageEntry> entry : zZ.entrySet()) {
-                    String key = entry.getKey();
-                    PageEntry value = entry.getValue();
+                    PageEntry pageEntry = new PageEntry(scannedFile.getName(), i, frequency);
 
-                    if (!resultZZZ.containsKey(key)) {
-                        resultZZZ.put(key, new ArrayList<>());
+                    if (!resultZZZ.containsKey(word)) {
+                        resultZZZ.put(word, new ArrayList<>());
                     }
-                    resultZZZ.get(key).add(value);
+                    resultZZZ.get(word).add(pageEntry);
                 }
             }
         }
     }
+
     @Override
     public List<PageEntry> search(String word) {
         List<PageEntry> result = resultZZZ.get(word);
