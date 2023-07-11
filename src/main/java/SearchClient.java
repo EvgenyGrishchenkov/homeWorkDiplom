@@ -20,6 +20,7 @@ public class SearchClient {
         ) {
             System.out.println("Введите запрос:");
             String query = consoleIn.readLine();
+            query = query.toLowerCase();
 
             out.println(query);
             out.flush();

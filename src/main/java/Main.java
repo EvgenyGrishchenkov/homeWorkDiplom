@@ -21,7 +21,7 @@ public class Main {
                 ) {
                     String query = in.readLine();
                     System.out.println("Получен запрос: " + query);
-                    query = query.toLowerCase();
+
                     List<PageEntry> result = engine.search(query);
 
                     Gson gson = new Gson();
