@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class BooleanSearchEngine implements SearchEngine {
-    private Map<String, List<PageEntry>> resultZZZ = new HashMap<>();
+    private Map<String, List<PageEntry>> resultListPageEntry = new HashMap<>();
 
     public BooleanSearchEngine(File pdfsDir) throws IOException {
         for (File scannedFile : pdfsDir.listFiles()) {
@@ -33,13 +33,14 @@ public class BooleanSearchEngine implements SearchEngine {
 
                     PageEntry pageEntry = new PageEntry(scannedFile.getName(), i, frequency);
 
-                    if (!resultZZZ.containsKey(word)) {
-                        resultZZZ.put(word, new ArrayList<>());
+                    if (!resultListPageEntry.containsKey(word)) {
+                        resultListPageEntry.put(word, new ArrayList<>());
                     }
-                    List<PageEntry> pageEntries = resultZZZ.get(word);
+                    List<PageEntry> pageEntries = resultListPageEntry.get(word);
                     int index = Collections.binarySearch(pageEntries, pageEntry);
                     if (index < 0) {
                         index = -index - 1;
+
                     }
                     pageEntries.add(index, pageEntry);
 
@@ -49,7 +50,8 @@ public class BooleanSearchEngine implements SearchEngine {
     }
     @Override
     public List<PageEntry> search(String word) {
-        List<PageEntry> result = resultZZZ.get(word);
-        return result;
-    }
+        List<PageEntry> result = resultListPageEntry.get(word);
+        return result == null ? Collections.emptyList() : result;
+    };
+
 }
