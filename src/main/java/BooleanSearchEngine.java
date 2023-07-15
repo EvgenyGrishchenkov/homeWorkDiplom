@@ -50,6 +50,7 @@ public class BooleanSearchEngine implements SearchEngine {
     }
     @Override
     public List<PageEntry> search(String word) {
+        word = word.toLowerCase();
         List<PageEntry> result = resultListPageEntry.get(word);
         return result == null ? Collections.emptyList() : result;
     };
